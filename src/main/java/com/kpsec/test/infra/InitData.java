@@ -3,7 +3,6 @@ package com.kpsec.test.infra;
 import com.kpsec.test.model.entity.Account;
 import com.kpsec.test.model.entity.Branch;
 import com.kpsec.test.model.entity.TransactionHist;
-import com.kpsec.test.model.entity.TransactionPk;
 import com.kpsec.test.repository.AccountRepository;
 import com.kpsec.test.repository.BranchRepository;
 import com.kpsec.test.repository.TransactionHistRepository;
@@ -65,8 +64,7 @@ private void initTrasactionHist() throws IOException {
         List<TransactionHist> transactionHistList = Files.readAllLines(resource.getFile().toPath(), StandardCharsets.UTF_8)
                 .stream().skip(1).map(line -> {
                     String[] split = line.split(",");
-                    TransactionPk transactionPk = new TransactionPk(split[0],split[1],split[2]);
-                    return TransactionHist.builder().transactionPk(transactionPk)
+                    return TransactionHist.builder().trDate(split[0]).accountNo(split[1]).trSn(split[2])
                             .trAmt(Integer.parseInt(split[3]))
                             .fee(Integer.parseInt(split[4])).cancelYn(Boolean.parseBoolean(split[5]))
                             .build();

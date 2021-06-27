@@ -19,4 +19,9 @@ public class AccountService {
         List<AccountResult> accountResultList = accountRepository.getAccountByBranchCode(branchCode);
         return accountResultList;
     }
+
+    public String getAccountNameByAccountNo(String accountCode){
+       return accountRepository.getAccountNameByAccountNo(accountCode);
+
+    }
 }

@@ -22,7 +22,5 @@ public class Account {
     private String accountName;
     private String branchCode;
 
-    @OneToMany(mappedBy = "transactionPk",fetch=FetchType.LAZY)
-    private List<TransactionHist> transactionHists;
 
 }

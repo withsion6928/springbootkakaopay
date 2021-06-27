@@ -15,7 +15,10 @@ management:
 spring:
   messages:
     basename: messages
-
+  #  security:
+  #    user:
+  #      name: user
+  #      password: 12345
   jpa:
     show-sql: true
 
