@@ -1,14 +1,17 @@
 package com.kpsec.test.service;
 
-import com.kpsec.test.model.Api1;
-import com.kpsec.test.model.Api2;
+import com.kpsec.test.model.*;
 import com.kpsec.test.repository.TransactionHistRepository;
+import org.hibernate.mapping.Array;
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -41,5 +44,13 @@ public class TransactionService {
         return transactionHistRepository.getNoneTrAccount();
     }
 
+    public List<Api3> getGroupByYearBr(){
+        return  transactionHistRepository.getGroupByYearBr();
+    }
 
+
+    public List<Api4> getBranchSumAmt(String branchName){
+
+        return transactionHistRepository.getBranchSumAmt(branchName);
+    }
 }
