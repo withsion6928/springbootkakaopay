@@ -1,5 +1,6 @@
 package com.kpsec.test.service;
 
+import com.kpsec.test.exception.UserNotFoundException;
 import com.kpsec.test.model.*;
 import com.kpsec.test.repository.TransactionHistRepository;
 import org.hibernate.mapping.Array;
@@ -49,8 +50,15 @@ public class TransactionService {
     }
 
 
-    public List<Api4_> getBranchSumAmt(String branchName){
-        System.out.println("Service API4:::"+transactionHistRepository.getBranchSumAmt(branchName).toString());
-        return transactionHistRepository.getBranchSumAmt(branchName);
+    public List<Api4> getBranchSumAmt(String branchName){
+        List<Api4> api4 = transactionHistRepository.getBranchSumAmt(branchName);
+        List<String> closeBranchList = new ArrayList<>();
+        closeBranchList.add("분당점");
+
+
+        if(api4 == null || api4.size() == 0 || closeBranchList.contains(api4.get(0).getBrName())){
+            throw new UserNotFoundException(String.format("br code not found error", ""));
+        }
+        return api4;
     }
 }

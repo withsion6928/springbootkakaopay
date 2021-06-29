@@ -10,13 +10,13 @@ import java.util.List;
 
 public interface TransactionHistRepository extends JpaRepository<TransactionHist, String> {
 
-    @Query(value = "SELECT SUBSTR(tr_Date,0,4) as year, (select distinct account_name from account where account_no = A.account_no)as accountName,account_no as accountNo, SUM(tr_Amt - fee) as sumAmt FROM transaction_Hist A WHERE  SUBSTR(tr_Date,0,4) = '2018' and CANCEL_YN  = 'N' Group by SUBSTR(tr_Date,0,4), account_no \n" +
-            "UNION SELECT SUBSTR(tr_Date,0,4) as year, (select distinct account_name from account where account_no = A.account_no)as accountName, account_no as accountNo, SUM(tr_Amt - fee) as sumAmt FROM transaction_Hist A WHERE  SUBSTR(tr_Date,0,4) = '2019' and CANCEL_YN  = 'N'  Group by SUBSTR(tr_Date,0,4), account_no ORDER BY 4 DESC", nativeQuery = true)
+    @Query(value = "SELECT SUBSTR(tr_Date,0,4) as year, (select distinct account_name from account where account_no = A.account_no)as accountName,account_no as accountNo, SUM(tr_Amt - fee) as sumAmt FROM transaction_Hist A WHERE  SUBSTR(tr_Date,0,4) = '2018' and CANCEL_YN <> 'Y' Group by SUBSTR(tr_Date,0,4), account_no \n" +
+            "UNION SELECT SUBSTR(tr_Date,0,4) as year, (select distinct account_name from account where account_no = A.account_no)as accountName, account_no as accountNo, SUM(tr_Amt - fee) as sumAmt FROM transaction_Hist A WHERE  SUBSTR(tr_Date,0,4) = '2019' and CANCEL_YN <> 'Y'  Group by SUBSTR(tr_Date,0,4), account_no ORDER BY 4 DESC", nativeQuery = true)
     List<Api1> getGroupByYearAccNo();
 
 
-    @Query(value = "SELECT '2018' as year,  account_name AS  accountName,account_no as accountNo FROM account A WHERE NOT EXISTS  (SELECT ACCOUNT_NO FROM TRANSACTION_HIST WHERE SUBSTR(tr_Date,0,4) = '2018' and CANCEL_YN  = 'N' AND ACCOUNT_NO = A.ACCOUNT_NO )\n" +
-            "UNION SELECT '2019' as year,  account_name AS  accountName,account_no as accountNo FROM account A WHERE  NOT EXISTS  (SELECT ACCOUNT_NO FROM TRANSACTION_HIST WHERE SUBSTR(tr_Date,0,4) = '2019' and CANCEL_YN  = 'N' AND ACCOUNT_NO = A.ACCOUNT_NO ) ORDER BY 1", nativeQuery = true)
+    @Query(value = "SELECT '2018' as year,  account_name AS  accountName,account_no as accountNo FROM account A WHERE NOT EXISTS  (SELECT ACCOUNT_NO FROM TRANSACTION_HIST WHERE SUBSTR(tr_Date,0,4) = '2018' and CANCEL_YN <> 'Y' AND ACCOUNT_NO = A.ACCOUNT_NO )\n" +
+            "UNION SELECT '2019' as year,  account_name AS  accountName,account_no as accountNo FROM account A WHERE  NOT EXISTS  (SELECT ACCOUNT_NO FROM TRANSACTION_HIST WHERE SUBSTR(tr_Date,0,4) = '2019' and CANCEL_YN <> 'Y' AND ACCOUNT_NO = A.ACCOUNT_NO ) ORDER BY 1", nativeQuery = true)
     List<Api2> getNoneTrAccount();
 
 
@@ -35,9 +35,10 @@ public interface TransactionHistRepository extends JpaRepository<TransactionHist
             " LEFT JOIN BRANCH B ON A.BRANCH_CODE = B.BRANCH_CODE \n" +
             " LEFT JOIN TRANSACTION_HIST C \n" +
             " ON A.ACCOUNT_NO = C.ACCOUNT_NO \n" +
-            " WHERE B.branch_code=:branchName \n" +
+            " WHERE CANCEL_YN <> 'Y'" +
+            " AND B.branch_name=:branchName \n" +
             " GROUP BY  brName , brCode", nativeQuery = true)
-    List<Api4_> getBranchSumAmt(@Param("branchName") String branchName);
+    List<Api4> getBranchSumAmt(@Param("branchName") String branchName);
 
 }
 

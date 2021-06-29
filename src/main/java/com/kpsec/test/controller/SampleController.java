@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(tags = "Sample")
+@Api(tags = "TestSubmit")
 @RestController
 @RequestMapping("/test/")
 public class SampleController {
@@ -75,19 +75,9 @@ public class SampleController {
 
 
     @GetMapping(value = "/branch", produces="application/json;charset=UTF-8")
-    public List<Api4_> getBranchSumAmt(@RequestBody String branchName) {
-        List<Api4_> api4 = transactionService.getBranchSumAmt(branchName);
-
-        System.out.println(api4.toString());
-        if(api4 == null){
-            throw new UserNotFoundException(String.format("getBrName[%s] not found", ""));
-        }
-
+    public List<Api4> getBranchSumAmt(@RequestParam String branchName) {
+        List<Api4> api4 = transactionService.getBranchSumAmt(branchName);
         return api4 ;
 
-
-//        List<Api4> api4 = transactionService.getBranchSumAmt(branchName);
-//        URI location = ServletUriComponentsBuilder.fromCurrentRequest();
-//        return ResponseEntity.created(location).build();
     }
 }

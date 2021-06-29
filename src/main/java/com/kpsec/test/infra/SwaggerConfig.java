@@ -25,7 +25,7 @@ public class SwaggerConfig {
     public static Contact DEFAULT_CONTACT = new  Contact("mtJu","https://github.com/withsion6928","with6928@gmail.com");
 
 
-    private static final ApiInfo  DEFAULT_API_INFO = new ApiInfo("Awesom API Tittle","My user management RestApi service"
+    private static final ApiInfo  DEFAULT_API_INFO = new ApiInfo("Awesome API Tittle","My user management RestApi service"
     , "1.0","urn:tos",DEFAULT_CONTACT,"Apache 2.0", "https://www.apache.org/licenses/LICENSE-2.0"
     ,new ArrayList<>());
 
@@ -45,7 +45,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("SwaggerConfig")
                 .apiInfo(buildApiInfo())
-                .tags(new Tag("sample", "This is sample"))
+                //.tags(new Tag("sample", "This is sample"))
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.regex("/.*"))
