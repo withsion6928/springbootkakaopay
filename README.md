@@ -14,3 +14,7 @@
     - maven
     - Junit5
 
+- 실행 방법
+ Spring boot 기동 후 아래 url 접속 후 각 기능별 try it out
+- http://localhost:8088/swagger-ui/index.html#/TestSubmit
+-  
