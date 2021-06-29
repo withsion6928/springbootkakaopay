@@ -1,4 +1,4 @@
-package com.kpsec.test.user;
+package com.kpsec.test.exception;
 
 
 import org.springframework.http.HttpStatus;

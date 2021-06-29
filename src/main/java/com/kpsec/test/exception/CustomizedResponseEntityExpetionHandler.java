@@ -1,6 +1,5 @@
 package com.kpsec.test.exception;
 
-import com.kpsec.test.user.UserNotFoundException;
 import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

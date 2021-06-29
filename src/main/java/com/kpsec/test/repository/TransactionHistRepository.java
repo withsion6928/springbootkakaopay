@@ -31,14 +31,13 @@ public interface TransactionHistRepository extends JpaRepository<TransactionHist
 
 
     @Query(value = "SELECT b.branch_name as brName, B.branch_code as brCode, SUM(tr_Amt - fee) as sumAmt \n" +
-            "FROM account a \n" +
-            "JOIN BRANCH B ON A.BRANCH_CODE = B.BRANCH_CODE \n" +
-            "JOIN TRANSACTION_HIST C \n" +
-            "ON A.ACCOUNT_NO = C.ACCOUNT_NO \n" +
-            "WHERE B.branch_name =  :branchName " +
-            "AND ROWNUM = 1 \n" +
-            "GROUP BY  B.BRANCH_CODE", nativeQuery = true)
-    List<Api4> getBranchSumAmt(@Param("branchName") String branchName);
+            " FROM account a \n" +
+            " LEFT JOIN BRANCH B ON A.BRANCH_CODE = B.BRANCH_CODE \n" +
+            " LEFT JOIN TRANSACTION_HIST C \n" +
+            " ON A.ACCOUNT_NO = C.ACCOUNT_NO \n" +
+            " WHERE B.branch_code=:branchName \n" +
+            " GROUP BY  brName , brCode", nativeQuery = true)
+    List<Api4_> getBranchSumAmt(@Param("branchName") String branchName);
 
 }
 

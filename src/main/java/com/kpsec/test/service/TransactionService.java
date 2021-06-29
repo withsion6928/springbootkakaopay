@@ -49,8 +49,8 @@ public class TransactionService {
     }
 
 
-    public List<Api4> getBranchSumAmt(String branchName){
-
+    public List<Api4_> getBranchSumAmt(String branchName){
+        System.out.println("Service API4:::"+transactionHistRepository.getBranchSumAmt(branchName).toString());
         return transactionHistRepository.getBranchSumAmt(branchName);
     }
 }

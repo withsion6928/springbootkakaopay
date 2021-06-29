@@ -1,21 +1,15 @@
 package com.kpsec.test.controller;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.kpsec.test.model.*;
 import com.kpsec.test.service.AccountService;
 import com.kpsec.test.service.TransactionService;
-import com.kpsec.test.user.UserNotFoundException;
+import com.kpsec.test.exception.UserNotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,25 +31,24 @@ public class SampleController {
         return accountService.getAccountByBranchCode(branchCode);
     }
 
-    @GetMapping(value = "/yearmax")
+    @GetMapping(value = "/accno")
     public List<Api1> getGroupByYearAccNo() {
 
         return transactionService.getGroupByYearAccNo();
     }
 
 
-    @GetMapping(value = "/account/tr/none")
+    @GetMapping(value = "/account/no")
     public List<Api2> getNoneTrAccount() {
 
         return transactionService.getNoneTrAccount();
     }
 
-    @GetMapping(value = "/year/branch/sum")
+    @GetMapping(value = "/year/branch")
     public ResponseEntity<Map<String, Object>> getGroupByYearBr() {
         List<Api3> api3 = transactionService.getGroupByYearBr();
 
         Map<String, Object> parent = new HashMap<>();
-        parent.put("year", api3.get(0).getYear());
 
         api3.forEach(d -> {
             String r = d.getYear();
@@ -81,14 +74,14 @@ public class SampleController {
 
 
 
-    @GetMapping(value = "/branch/sum", produces="text/plain;charset=UTF-8")
-    public List<Api4> getBranchSumAmt(@RequestBody String branchName) {
-        List<Api4> api4 = transactionService.getBranchSumAmt(branchName);
+    @GetMapping(value = "/branch", produces="application/json;charset=UTF-8")
+    public List<Api4_> getBranchSumAmt(@RequestBody String branchName) {
+        List<Api4_> api4 = transactionService.getBranchSumAmt(branchName);
+
+        System.out.println(api4.toString());
         if(api4 == null){
             throw new UserNotFoundException(String.format("getBrName[%s] not found", ""));
-
         }
-
 
         return api4 ;
 
