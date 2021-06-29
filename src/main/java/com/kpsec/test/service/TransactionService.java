@@ -23,6 +23,10 @@ public class TransactionService {
 
     public List<Api1> getGroupByYearAccNo(){
         List<Api1> api1= transactionHistRepository.getGroupByYearAccNo();
+        if(api1 == null || api1.size() == 0 ){
+            throw new UserNotFoundException(String.format("account no not found error", ""));
+        }
+
         List<Api1> resultList = new ArrayList<>();
         String prev = "0000";
         int idx =0 ;
@@ -42,11 +46,21 @@ public class TransactionService {
     }
 
     public List<Api2> getNoneTrAccount(){
+        List<Api2> api2 = transactionHistRepository.getNoneTrAccount();
+        if(api2 == null || api2.size() == 0 ){
+            throw new UserNotFoundException(String.format("account not found error", ""));
+        }
+
         return transactionHistRepository.getNoneTrAccount();
     }
 
     public List<Api3> getGroupByYearBr(){
-        return  transactionHistRepository.getGroupByYearBr();
+        List<Api3> api3 = transactionHistRepository.getGroupByYearBr();
+        if(api3 == null || api3.size() == 0 ){
+            throw new UserNotFoundException(String.format("br code not found error", ""));
+        }
+
+        return  api3;
     }
 
 

@@ -3,7 +3,6 @@ package com.kpsec.test.controller;
 import com.kpsec.test.model.*;
 import com.kpsec.test.service.AccountService;
 import com.kpsec.test.service.TransactionService;
-import com.kpsec.test.exception.UserNotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,33 +17,27 @@ import java.util.Map;
 @Api(tags = "TestSubmit")
 @RestController
 @RequestMapping("/test/")
-public class SampleController {
+public class TestSubmitController {
     @Autowired
     private AccountService accountService;
 
     @Autowired
     private TransactionService transactionService;
 
-    @ApiOperation(value = "sample")
-    @GetMapping(value = "/acount")
-    public List<AccountResult> getAccountInfo(String branchCode) {
-        return accountService.getAccountByBranchCode(branchCode);
-    }
-
-    @GetMapping(value = "/accno")
+    @GetMapping(value = "/ap1/accno")
     public List<Api1> getGroupByYearAccNo() {
 
         return transactionService.getGroupByYearAccNo();
     }
 
 
-    @GetMapping(value = "/account/no")
+    @GetMapping(value = "/ap2/account/no")
     public List<Api2> getNoneTrAccount() {
 
         return transactionService.getNoneTrAccount();
     }
 
-    @GetMapping(value = "/year/branch")
+    @GetMapping(value = "/ap3/year/branch")
     public ResponseEntity<Map<String, Object>> getGroupByYearBr() {
         List<Api3> api3 = transactionService.getGroupByYearBr();
 
@@ -74,7 +67,7 @@ public class SampleController {
 
 
 
-    @GetMapping(value = "/branch", produces="application/json;charset=UTF-8")
+    @GetMapping(value = "/ap4/branch", produces="application/json;charset=UTF-8")
     public List<Api4> getBranchSumAmt(@RequestParam String branchName) {
         List<Api4> api4 = transactionService.getBranchSumAmt(branchName);
         return api4 ;
