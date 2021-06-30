@@ -17,5 +17,10 @@
 
 
 - 실행 방법
-  - Spring boot 기동 후 아래 url 접속 후 각 기능별 try it out
-  - http://localhost:8088/swagger-ui/index.html#/TestSubmit
+  - maven reload->Spring boot 기동(kakapay) 후
+    아래 url 접속 후 각 기능별 try it out
+    - http://localhost:8088/swagger-ui/index.html#/TestSubmit
+  
+  
+- 문제해결 방법
+  - JPA native Query를 이용한 쿼리 조회 방식으로 처리 
