@@ -1,52 +1,58 @@
 package com.kpsec.test.controller;
 
+import com.kpsec.test.AbstractControllerTest;
 import org.junit.jupiter.api.Test;	// {1}
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = TestSubmitController.class)
-public class TestSubmitControllerTest {
+public class TestSubmitControllerTest extends AbstractControllerTest {
 
     @Autowired
-    private MockMvc mvc;
+    private TestSubmitController testSubmitController;
 
-
+    @Override
+    protected Object controller() {
+        return testSubmitController;
+    }
 
     @Test
     public void getGroupByYearAccNo() throws Exception {
-        mvc.perform(get("/ap1/accno"))
+        mockMvc.perform(get("/test/ap1/accno"))
                 .andExpect(status().isOk());
     }
-
-    @org.junit.Test
+    @Test
     public void getNoneTrAccount() throws Exception {
-        mvc.perform(get("/ap2/account/no"))
+        mockMvc.perform(get("/test/ap2/account/no"))
                 .andExpect(status().isOk());
     }
-
-    @org.junit.Test
+    @Test
     public void getGroupByYearBr() throws Exception {
 
-        mvc.perform(get("/ap3/year/branch"))
+        mockMvc.perform(get("/test/ap3/year/branch"))
                 .andExpect(status().isOk());
 
     }
-
-    @org.junit.Test
+    @Test
     public void getBranchSumAmt() throws Exception {
-        mvc.perform(get("/ap4/branch"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("\"branchName\" : \"분당점\"" ));
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("branchName", "분당점");
+
+        mockMvc.perform(get("/test/ap4/branch")
+                .params(params))
+               ;
 
 
     }
+
+
 }
